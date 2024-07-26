@@ -1,6 +1,6 @@
+#ifndef ARDUINO
 #include <fstream>
-#include <cstdint>
-#include "camera_index.h"
+#include "include/camera_index.h"
 
 int main(int argc, char *argv[]) {
   std::ofstream ofs("index_ov2640.html.gz", std::ios::binary);
@@ -23,3 +23,4 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
+#endif
