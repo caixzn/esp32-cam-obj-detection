@@ -1,6 +1,6 @@
 #ifndef ARDUINO
-#include <fstream>
 #include "include/camera_index.h"
+#include <fstream>
 
 int main(int argc, char *argv[]) {
   std::ofstream ofs("index_ov2640.html.br", std::ios::binary);
