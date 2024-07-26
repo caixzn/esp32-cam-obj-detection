@@ -1,0 +1,33 @@
+on:
+  push:
+    paths:
+      - "**.h"
+      - "**.cpp"
+      - "**.ino"
+
+permissions:
+  contents: write
+
+jobs:
+  auto-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - name: format
+        run: |
+          shopt -s globstar
+          clang-format -i **/*.h **/*.cpp **/*.ino
+      - name: diff
+        id: diff_clang_format
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: commit
+        if: steps.diff_clang_format.outputs.modified == 'true'
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "GitHub Actions"
+          git commit -am "chore: format c++ files"
+          git push
