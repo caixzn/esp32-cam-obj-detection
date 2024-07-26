@@ -1,4 +1,4 @@
-out=include/camera_index.h
+out=src/include/camera_index.h
 cat /dev/null > $out
 
 for file in app/index_*.html; do
